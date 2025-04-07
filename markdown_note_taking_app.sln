@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "markdown_note_taking_app", "markdown_note_taking_app.csproj", "{CC6C797C-134F-412F-87E2-93FB96EFD56E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "markdown_note_taking_app", "markdown_note_taking_app.csproj", "{CC6C797C-134F-412F-87E2-93FB96EFD56E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "..\Contracts\Contracts.csproj", "{76EA0B8D-431E-463A-B162-FF4D47114C15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "..\LoggerService\LoggerService.csproj", "{2940944B-BEFE-4979-986C-7C58BA8BEC3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76EA0B8D-431E-463A-B162-FF4D47114C15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76EA0B8D-431E-463A-B162-FF4D47114C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76EA0B8D-431E-463A-B162-FF4D47114C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76EA0B8D-431E-463A-B162-FF4D47114C15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

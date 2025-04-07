@@ -1,4 +1,20 @@
+using markdown_note_taking_app.Extensions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
+using NLog;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Cors config which allows for any origin, method, and headers
+builder.Services.ConfigureCors();
+
+//IIS integration for app deployment
+builder.Services.ConfigureIISIntegration();
+
+//Logger
+LogManager.Setup().LoadConfigurationFromFile(
+    string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"),
+    optional: false);
 
 // Add services to the container.
 
@@ -12,11 +28,21 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.All
+});
 
 app.UseAuthorization();
 
