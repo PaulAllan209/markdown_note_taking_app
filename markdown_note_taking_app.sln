@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "markdown_note_taking_app", "markdown_note_taking_app.csproj", "{CC6C797C-134F-412F-87E2-93FB96EFD56E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC6C797C-134F-412F-87E2-93FB96EFD56E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C67CE5A5-A02C-4934-9B73-C4438590E32E}
+	EndGlobalSection
+EndGlobal
