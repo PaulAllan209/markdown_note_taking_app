@@ -16,6 +16,9 @@ LogManager.Setup().LoadConfigurationFromFile(
     string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"),
     optional: false);
 
+//Configure for sqlServer
+builder.Services.ConfigureSqlContext(builder.Configuration);
+
 // Add services to the container.
 builder.Services.ConfigureLoggerService();
 

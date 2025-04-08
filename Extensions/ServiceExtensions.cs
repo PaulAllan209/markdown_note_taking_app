@@ -1,5 +1,7 @@
 ﻿using Contracts;
 using LoggerService;
+using markdown_note_taking_app.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace markdown_note_taking_app.Extensions
 {
@@ -17,8 +19,10 @@ namespace markdown_note_taking_app.Extensions
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
             services.Configure<IISOptions>(options =>
             {
-
             });
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<DataContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
 
 
         public static void ConfigureLoggerService(this IServiceCollection services) =>
