@@ -1,4 +1,7 @@
-﻿namespace markdown_note_taking_app.Extensions
+﻿using Contracts;
+using LoggerService;
+
+namespace markdown_note_taking_app.Extensions
 {
     public static class ServiceExtensions
     {
@@ -16,5 +19,9 @@
             {
 
             });
+
+
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+            services.AddSingleton<ILoggerManager, LoggerManager>();
     }
 }

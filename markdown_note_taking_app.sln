@@ -5,9 +5,11 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "markdown_note_taking_app", "markdown_note_taking_app.csproj", "{CC6C797C-134F-412F-87E2-93FB96EFD56E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "..\Contracts\Contracts.csproj", "{76EA0B8D-431E-463A-B162-FF4D47114C15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "..\Contracts\Contracts.csproj", "{76EA0B8D-431E-463A-B162-FF4D47114C15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "..\LoggerService\LoggerService.csproj", "{2940944B-BEFE-4979-986C-7C58BA8BEC3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "..\LoggerService\LoggerService.csproj", "{2940944B-BEFE-4979-986C-7C58BA8BEC3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "..\Entities\Entities.csproj", "{2874BA4D-0B69-41B3-BCB2-86AE2D87E209}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2940944B-BEFE-4979-986C-7C58BA8BEC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2874BA4D-0B69-41B3-BCB2-86AE2D87E209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2874BA4D-0B69-41B3-BCB2-86AE2D87E209}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2874BA4D-0B69-41B3-BCB2-86AE2D87E209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2874BA4D-0B69-41B3-BCB2-86AE2D87E209}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
