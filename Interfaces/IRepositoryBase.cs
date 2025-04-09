@@ -6,7 +6,7 @@ namespace markdown_note_taking_app.Interfaces
     {
         IQueryable<T> FindAll(bool trackChanges);
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression,bool trackChanges);
-        void Create(T entitiy);
+        void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
     }
