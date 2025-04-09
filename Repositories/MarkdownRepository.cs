@@ -1,41 +1,40 @@
 ﻿using Entities.Models;
 using markdown_note_taking_app.Data;
 using markdown_note_taking_app.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace markdown_note_taking_app.Repositories
 {
-    public class MarkdownRepository : IMarkdownRepository
+    public class MarkdownRepository : RepositoryBase<MarkdownFile>,IMarkdownRepository
     {
-        private readonly DataContext _dataContext;
 
-        public MarkdownRepository(DataContext dataContext)
+        public MarkdownRepository(DataContext dataContext) : base(dataContext)
         {
-            _dataContext = dataContext;          
         }
 
         public void CreateMarkdownFile(MarkdownFile markdownFile)
         {
-            _dataContext.Add(markdownFile);
+            Create(markdownFile);
         }
 
         public void DeleteMarkdownFile(MarkdownFile markdownFile)
         {
-            throw new NotImplementedException();
+            Delete(markdownFile);
         }
 
-        public Task<IEnumerable<MarkdownFile>> GetAllMarkdownFilesAsync()
+        public async Task<IEnumerable<MarkdownFile>> GetAllMarkdownFilesAsync(bool trackChanges)
         {
-            throw new NotImplementedException();
+           return await FindAll(trackChanges).OrderBy(x => x.Title).ToListAsync();
         }
 
-        public Task<IEnumerable<MarkdownFile>> GetByIdsAsync()
+        public async Task<IEnumerable<MarkdownFile>> GetByIdsAsync(IEnumerable<Guid> fileIds,bool trackChanges)
         {
-            throw new NotImplementedException();
+            return await FindByCondition(x => fileIds.Contains(x.Id), trackChanges).ToListAsync();
         }
 
-        public Task<MarkdownFile> GetMarkdownFileAsync()
+        public async Task<MarkdownFile> GetMarkdownFileAsync(Guid fileId, bool trackChanges)
         {
-            throw new NotImplementedException();
+            return await FindByCondition(x => x.Id == fileId, trackChanges);
         }
     }
 }
