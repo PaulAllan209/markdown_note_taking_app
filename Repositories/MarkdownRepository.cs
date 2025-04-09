@@ -34,7 +34,7 @@ namespace markdown_note_taking_app.Repositories
 
         public async Task<MarkdownFile> GetMarkdownFileAsync(Guid fileId, bool trackChanges)
         {
-            return await FindByCondition(x => x.Id == fileId, trackChanges);
+            return await FindByCondition(x => x.Id == fileId, trackChanges).SingleOrDefaultAsync(); ;
         }
     }
 }
