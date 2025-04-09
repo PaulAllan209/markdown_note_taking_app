@@ -53,7 +53,7 @@ namespace markdown_note_taking_app.Service
             var markDownFile = await _repository.MarkDown.GetMarkdownFileAsync(fileId, trackChanges);
 
             if (markDownFile == null)
-                throw new FileNotFoundException(fileId);
+                throw new FileNotFoundException();
 
             return markDownFile;
         }
