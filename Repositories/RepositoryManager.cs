@@ -17,6 +17,5 @@ namespace markdown_note_taking_app.Repositories
         public IMarkdownRepository MarkDown => _markdownRepository.Value;
 
         public async Task SaveAsync() => await _dataContext.SaveChangesAsync();
-
     }
 }
