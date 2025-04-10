@@ -11,6 +11,13 @@ builder.Services.ConfigureCors();
 //IIS integration for app deployment
 builder.Services.ConfigureIISIntegration();
 
+//Repository and Service manager
+builder.Services.ConfigureRepositoryManager();
+builder.Services.ConfigureServiceManager();
+
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 //Logger
 LogManager.Setup().LoadConfigurationFromFile(
     string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"),
