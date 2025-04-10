@@ -22,6 +22,7 @@ namespace markdown_note_taking_app.Controllers
         public async Task<IActionResult> GetMarkdownFiles()
         {
             var markdownFiles = await _serviceManager.MarkdownService.GetAllMarkdownFilesAsync(trackChanges: false);
+            _logger.LogDebug("testing the logger");
 
             return Ok(markdownFiles);
         }

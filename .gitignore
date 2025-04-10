@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 internal_logs/
+logs/
