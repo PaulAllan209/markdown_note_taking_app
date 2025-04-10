@@ -1,6 +1,8 @@
 ﻿using Contracts;
 using LoggerService;
 using markdown_note_taking_app.Data;
+using markdown_note_taking_app.Interfaces;
+using markdown_note_taking_app.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace markdown_note_taking_app.Extensions
@@ -20,6 +22,11 @@ namespace markdown_note_taking_app.Extensions
             services.Configure<IISOptions>(options =>
             {
             });
+
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+        public static void ConfigureServ
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<DataContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
