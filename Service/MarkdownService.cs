@@ -32,9 +32,11 @@ namespace markdown_note_taking_app.Service
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MarkdownFileDto>> GetAllMarkdownFilesAsync(bool trackChanges)
+        public async Task<IEnumerable<MarkdownFileDto>> GetAllMarkdownFilesAsync(bool trackChanges)
         {
-            throw new NotImplementedException();
+            var markdownFileEntities = await _repository.MarkDown.GetAllMarkdownFilesAsync(trackChanges);
+            var markdownFileDtos = _mapper.Map<IEnumerable<MarkdownFileDto>>(markdownFileEntities);
+            return markdownFileDtos;
         }
 
 
