@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using markdown_note_taking_app.Dto;
 using markdown_note_taking_app.Interfaces.ServiceInterface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,9 +23,14 @@ namespace markdown_note_taking_app.Controllers
         public async Task<IActionResult> GetMarkdownFiles()
         {
             var markdownFiles = await _serviceManager.MarkdownService.GetAllMarkdownFilesAsync(trackChanges: false);
-            _logger.LogDebug("testing the logger");
-
             return Ok(markdownFiles);
+        }
+
+        [HttpPost("upload")]
+        //[Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadMarkdownFile([FromForm] MarkdownFileUploadDto markDownFile)
+        {
+            return NoContent();
         }
 
 
