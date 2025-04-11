@@ -23,6 +23,7 @@ namespace markdown_note_taking_app.Controllers
         public async Task<IActionResult> GetMarkdownFiles()
         {
             var markdownFiles = await _serviceManager.MarkdownService.GetAllMarkdownFilesAsync(trackChanges: false);
+
             return Ok(markdownFiles);
         }
 
@@ -30,7 +31,9 @@ namespace markdown_note_taking_app.Controllers
         //[Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadMarkdownFile([FromForm] MarkdownFileUploadDto markDownFile)
         {
-            return NoContent();
+            var MarkdownFileDto = await _serviceManager.MarkdownService.CreateMarkdownFileAsync(markDownFile);
+
+            return Ok(MarkdownFileDto);
         }
 
 

@@ -2,6 +2,6 @@
 {
     public record MarkdownFileUploadDto
     {
-        IFormFile MarkdownFile { get; init; }
+        public IFormFile MarkdownFile { get; init; }
     }
 }

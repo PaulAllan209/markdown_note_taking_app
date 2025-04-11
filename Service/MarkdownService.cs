@@ -4,6 +4,8 @@ using Entities.Models;
 using markdown_note_taking_app.Dto;
 using markdown_note_taking_app.Interfaces;
 using markdown_note_taking_app.Interfaces.ServiceInterface;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace markdown_note_taking_app.Service
 {
@@ -20,11 +22,35 @@ namespace markdown_note_taking_app.Service
             _mapper = mapper;
         }
 
-        public async Task<MarkdownFileDto> CreateMarkdownFileAsync(MarkdownFileDto markdownFile)
+        public async Task<MarkdownFileDto> CreateMarkdownFileAsync(MarkdownFileUploadDto markdownFile)
         {
-            var markdownFileEntity = _mapper.Map<MarkdownFile>(markdownFile);
+            if (markdownFile == null)
+                throw new BadHttpRequestException("File is empty");
+
+            string fileName = Path.GetFileName(markdownFile.MarkdownFile.FileName);
+
+            //Read the file content into a string
+            string fileContent;
+            using(var reader = new StreamReader(markdownFile.MarkdownFile.OpenReadStream()))
+            {
+                fileContent = await reader.ReadToEndAsync();
+            }
+
+            //Create new MarkdownFileDto for creation in database and return value
+            var MarkdownFileDto = new MarkdownFileDto
+            {
+                Id = Guid.NewGuid(),
+                Title = fileName,
+                FileContent = fileContent,
+                UploadDate = DateTime.Now
+            };
+
+            // Last Step
+            var markdownFileEntity = _mapper.Map<MarkdownFile>(MarkdownFileDto);
+            _repository.MarkDown.CreateMarkdownFile(markdownFileEntity);
             await _repository.SaveAsync();
-            return markdownFile;
+
+            return MarkdownFileDto;
         }
 
         public Task<MarkdownFileDto> DeleteMarkdownFileAsync(Guid fileId)
