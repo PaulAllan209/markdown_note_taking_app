@@ -35,6 +35,14 @@ namespace markdown_note_taking_app.Controllers
             return Ok(markdownFiles);
         }
 
+        [HttpGet("{fileId:guid}/html")]
+        public async Task<IActionResult> GetMarkdownFileAsHtml(Guid fileId)
+        {
+            var markdownFileConvertToHtmlDto = await _serviceManager.MarkdownService.GetMarkdownFileAsHtmlAsync(fileId, trackChanges: false);
+
+            return Ok(markdownFileConvertToHtmlDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadMarkdownFile([FromForm] MarkdownFileUploadDto markDownFile)
         {

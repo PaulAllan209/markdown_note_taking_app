@@ -11,5 +11,6 @@ namespace markdown_note_taking_app.Interfaces.ServiceInterface
         Task<MarkdownFileDto> CreateMarkdownFileAsync(MarkdownFileUploadDto markdownFile);
         Task DeleteMarkdownFileAsync(Guid fileId, bool trackChanges);
         Task<MarkdownFile> GetMarkdownFileAndCheckIfItExistsAsync(Guid fileId, bool trackChanges);
+        Task<MarkdownFileConvertToHtmlDto> GetMarkdownFileAsHtmlAsync(Guid fileId, bool trackChanges);
     }
 }

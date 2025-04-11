@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Models;
+using Markdig;
 using markdown_note_taking_app.Dto;
 using markdown_note_taking_app.Interfaces;
 using markdown_note_taking_app.Interfaces.ServiceInterface;
@@ -93,6 +94,37 @@ namespace markdown_note_taking_app.Service
                 throw new FileNotFoundException($"The file with the file id \"{fileId}\" cannot be found");
 
             return markDownFile;
+        }
+
+        public async Task<MarkdownFileConvertToHtmlDto> GetMarkdownFileAsHtmlAsync(Guid fileId, bool trackChanges)
+        {
+            if (fileId == Guid.Empty)
+                throw new BadHttpRequestException("File Id cannot be empty");
+
+            var markdownFile = await GetMarkdownFileAndCheckIfItExistsAsync(fileId, trackChanges);
+
+            string markdown_html = ConvertMarkdownToHtml(markdownFile);
+
+            var markdown_file_html_dto = new MarkdownFileConvertToHtmlDto()
+            {
+                Id = markdownFile.Id,
+                Title = markdownFile.Title,
+                FileContentAsHtml = markdown_html,
+                UploadDate = markdownFile.UploadDate
+            };
+
+            return markdown_file_html_dto;
+        }
+
+        private string ConvertMarkdownToHtml(MarkdownFile markdownFile)
+        {
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+            string markdown_content = markdownFile.FileContent;
+
+            string markdown_html = Markdown.ToHtml(markdown_content, pipeline);
+
+            return markdown_html;
         }
     }
 }
