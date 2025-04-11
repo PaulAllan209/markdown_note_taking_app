@@ -74,7 +74,10 @@ namespace markdown_note_taking_app.Service
 
         public async Task<MarkdownFileDto> GetMarkdownFileAsync(Guid fileId, bool trackChanges)
         {
-            var markdownFileEntity = GetMarkdownFileAndCheckIfItExistsAsync(fileId, trackChanges);
+            if (fileId == Guid.Empty)
+                throw new BadHttpRequestException("File Id cannot be empty");
+
+            var markdownFileEntity = await GetMarkdownFileAndCheckIfItExistsAsync(fileId, trackChanges);
             return _mapper.Map<MarkdownFileDto>(markdownFileEntity);
         }
 
@@ -87,7 +90,7 @@ namespace markdown_note_taking_app.Service
             var markDownFile = await _repository.MarkDown.GetMarkdownFileAsync(fileId, trackChanges);
 
             if (markDownFile == null)
-                throw new FileNotFoundException();
+                throw new FileNotFoundException($"The file with the file id \"{fileId}\" cannot be found");
 
             return markDownFile;
         }

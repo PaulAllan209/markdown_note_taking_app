@@ -19,6 +19,14 @@ namespace markdown_note_taking_app.Controllers
             _logger = logger;
         }
 
+        [HttpGet("{fileId:guid}")]
+        public async Task<IActionResult> GetMarkdownFile(Guid fileId)
+        {
+            var company = await _serviceManager.MarkdownService.GetMarkdownFileAsync(fileId, trackChanges: false);
+
+            return Ok(company);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetMarkdownFiles()
         {
@@ -27,8 +35,7 @@ namespace markdown_note_taking_app.Controllers
             return Ok(markdownFiles);
         }
 
-        [HttpPost("upload")]
-        //[Consumes("multipart/form-data")]
+        [HttpPost]
         public async Task<IActionResult> UploadMarkdownFile([FromForm] MarkdownFileUploadDto markDownFile)
         {
             var MarkdownFileDto = await _serviceManager.MarkdownService.CreateMarkdownFileAsync(markDownFile);
