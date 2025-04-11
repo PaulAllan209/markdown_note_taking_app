@@ -36,6 +36,14 @@ namespace markdown_note_taking_app.Controllers
             return Ok(MarkdownFileDto);
         }
 
+        [HttpDelete("{fileId:guid}")]
+        public async Task<IActionResult> DeleteMarkdownFile(Guid fileId)
+        {
+            await _serviceManager.MarkdownService.DeleteMarkdownFileAsync(fileId, trackChanges: false);
+
+            return Ok();
+        }
+
 
     }
 }

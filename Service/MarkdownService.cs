@@ -53,9 +53,15 @@ namespace markdown_note_taking_app.Service
             return MarkdownFileDto;
         }
 
-        public Task<MarkdownFileDto> DeleteMarkdownFileAsync(Guid fileId)
+        public async Task DeleteMarkdownFileAsync(Guid fileId, bool trackChanges)
         {
-            throw new NotImplementedException();
+            if (fileId == Guid.Empty)
+                throw new ArgumentNullException("The file id cannot be empty.");
+
+            var markdownFileEntity = await GetMarkdownFileAndCheckIfItExistsAsync(fileId, trackChanges);
+
+            _repository.MarkDown.DeleteMarkdownFile(markdownFileEntity);
+            await _repository.SaveAsync();
         }
 
         public async Task<IEnumerable<MarkdownFileDto>> GetAllMarkdownFilesAsync(bool trackChanges)

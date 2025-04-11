@@ -9,7 +9,7 @@ namespace markdown_note_taking_app.Interfaces.ServiceInterface
         Task<MarkdownFileDto> GetMarkdownFileAsync(Guid fileId, bool trackChanges);
         Task<IEnumerable<MarkdownFileDto>> GetMarkdownFileByIdsAsync(IEnumerable<Guid> fileIds, bool trackChanges);
         Task<MarkdownFileDto> CreateMarkdownFileAsync(MarkdownFileUploadDto markdownFile);
-        Task<MarkdownFileDto> DeleteMarkdownFileAsync(Guid fileId);
+        Task DeleteMarkdownFileAsync(Guid fileId, bool trackChanges);
         Task<MarkdownFile> GetMarkdownFileAndCheckIfItExistsAsync(Guid fileId, bool trackChanges);
     }
 }
