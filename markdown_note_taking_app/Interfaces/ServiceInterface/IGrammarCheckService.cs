@@ -2,7 +2,7 @@
 {
     public interface IGrammarCheckService
     {
-        Task<string> CheckGrammarMarkdown(string markdownContent);
-        Task<string> CheckGrammarFromApi(string content);
+        Task<string> CheckGrammarMarkdownAsync(string markdownContent);
+        Task<string> CheckGrammarFromApiAsync(string content);
     }
 }
