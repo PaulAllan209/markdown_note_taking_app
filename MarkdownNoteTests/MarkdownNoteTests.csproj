@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\markdown_note_taking_app\markdown_note_taking_app.csproj" />
   </ItemGroup>
 
   <ItemGroup>
