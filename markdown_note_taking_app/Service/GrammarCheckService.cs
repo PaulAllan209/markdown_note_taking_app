@@ -6,6 +6,8 @@ using markdown_note_taking_app.Interfaces.ServiceInterface;
 using markdown_note_taking_app.Models.LanguageTool;
 using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
+using Markdig.Renderers.Normalize;
+using Markdig.Helpers;
 
 namespace markdown_note_taking_app.Service
 {
@@ -16,27 +18,32 @@ namespace markdown_note_taking_app.Service
 
         public async Task<string> CheckGrammarMarkdownAsync(string markdownContent)
         {
+            //Check the grammar in the markdown content
             var document = Markdown.Parse(markdownContent);
+            var document_checked = await ProcessDocumentAsync(document);
 
-            var replacements = new Dictionary<int, string>();
+            // Convert the Markdown object to string
+            var string_writer = new StringWriter();
+            var writer = new NormalizeRenderer(string_writer);
+            writer.Render(document_checked);
 
-            ProcessDocumentAsync(document, replacements);
-
-            if (replacements.Any())
+            return string_writer.ToString();
+        }
+        
+        private async Task<MarkdownObject> ProcessDocumentAsync(MarkdownObject markdownObject)
+        {
+            // Traverse through the nodes inside the markdown object and check the grammer in each content
+            foreach (var literal in markdownObject.Descendants<LiteralInline>())
             {
-                // Sort by descending to avoid offset issues when replacing
-                foreach (var replacement in replacements.OrderByDescending(r => r.Key))
-                {
-                    // Replace original text with corrected text at the specific location
-                    // This is simplified - real implementation would need to handle offsets properly
-                    markdownContent = markdownContent.Substring(0, replacement.Key) +
-                                     replacement.Value +
-                                     markdownContent.Substring(replacement.Key + replacement.Value.Length);
-                }
+                string orig_text = literal.Content.ToString();
+                string modified_text = await CheckGrammarFromApiAsync(orig_text);
+
+                literal.Content = new StringSlice(modified_text);
             }
 
-            return markdownContent;
+            return markdownObject;
         }
+
         public async Task<string> CheckGrammarFromApiAsync(string content)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.languagetool.org/v2/check")
@@ -52,6 +59,8 @@ namespace markdown_note_taking_app.Service
             var response = await client.SendAsync(request);
             var json = await response.Content.ReadAsStringAsync();
 
+
+            //Languagetool api sends a lot of objects inside the json so we need to clean it up
             var result = JsonConvert.DeserializeObject<LanguageToolResponse>(json);
 
             foreach (var match in result.Matches.OrderByDescending(m => m.Offset))
@@ -66,37 +75,6 @@ namespace markdown_note_taking_app.Service
             }
 
             return content;
-        }
-
-        private async Task ProcessDocumentAsync(MarkdownObject markdownObject, Dictionary<int, string> replacements)
-        {
-            // If this is a leaf block with text
-            if (markdownObject is LeafBlock leafBlock && leafBlock.Inline != null)
-            {
-                foreach (var inline in leafBlock.Inline)
-                {
-                    if (inline is LiteralInline literalInline)
-                    {
-                        // Extract text content for grammar checking
-                        string originalText = literalInline.Content.ToString();
-
-                        // Check grammar on the text content
-                        string correctedText = await CheckGrammarFromApiAsync(originalText);
-
-                        // If there's a correction, store it for replacement
-                        if (correctedText != originalText)
-                        {
-                            replacements[literalInline.Span.Start] = correctedText;
-                        }
-                    }
-                }
-            }
-
-            // Process all children recursively
-            foreach (var child in markdownObject.Descendants())
-            {
-                await ProcessDocumentAsync(child, replacements);
-            }
         }
     }
 }
