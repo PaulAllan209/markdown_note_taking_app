@@ -8,6 +8,8 @@ namespace markdown_note_taking_app.Service
     public class ServiceManager : IServiceManager
     {
         private readonly Lazy<IMarkdownService> _markdownService;
+        private readonly Lazy<IGrammarCheckService> _grammarCheckService;
+
 
         public ServiceManager(
             IRepositoryManager repositoryManager,
@@ -15,7 +17,9 @@ namespace markdown_note_taking_app.Service
             IMapper mapper)
         {
             _markdownService = new Lazy<IMarkdownService>(() => new MarkdownService(repositoryManager, logger, mapper));
+            _grammarCheckService = new Lazy<IGrammarCheckService>(() => new GrammarCheckService());
         }
         public IMarkdownService MarkdownService => _markdownService.Value;
+        public IGrammarCheckService GrammarCheckService => _grammarCheckService.Value;
     }
 }

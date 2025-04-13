@@ -9,6 +9,8 @@ namespace markdown_note_taking_app
         public MappingProfile()
         {
             CreateMap<MarkdownFile, MarkdownFileDto>().ReverseMap();
+            CreateMap<MarkdownFileDto, MarkdownFileConvertToHtmlDto>().ReverseMap();
+
 
         }
     }

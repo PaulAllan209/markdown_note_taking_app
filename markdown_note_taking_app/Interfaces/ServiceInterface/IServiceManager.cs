@@ -3,5 +3,7 @@
     public interface IServiceManager
     {
         IMarkdownService MarkdownService { get; }
+        IGrammarCheckService GrammarCheckService { get; }
+
     }
 }

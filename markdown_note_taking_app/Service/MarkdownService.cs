@@ -104,38 +104,32 @@ namespace markdown_note_taking_app.Service
 
             var markdownFile = await GetMarkdownFileAndCheckIfItExistsAsync(fileId, trackChanges);
 
-            string markdown_html = ConvertMarkdownToHtml(markdownFile);
+            var markdownFileDto = _mapper.Map<MarkdownFileDto>(markdownFile);
 
-            var markdown_file_html_dto = new MarkdownFileConvertToHtmlDto()
+            MarkdownFileConvertToHtmlDto markdown_html_dto = ConvertMarkdownFileDtoToHtml(markdownFileDto);
+
+            return markdown_html_dto;
+        }
+
+        public MarkdownFileConvertToHtmlDto ConvertMarkdownFileDtoToHtml(MarkdownFileDto markdownFileDto)
+        {
+
+            //Gets the markdownFileDto content and convert it into html
+            var markdownFile = _mapper.Map<MarkdownFile>(markdownFileDto);
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            string markdown_content = markdownFile.FileContent;
+            string markdown_html_content = Markdown.ToHtml(markdown_content, pipeline);
+
+            //Create new MarkdownFileConvertToHtmlDto Assigns new value in the content of markdownFileDto
+            var markdown_html_dto = new MarkdownFileConvertToHtmlDto()
             {
-                Id = markdownFile.Id,
-                Title = markdownFile.Title,
-                FileContentAsHtml = markdown_html,
-                UploadDate = markdownFile.UploadDate
+                Id = markdownFileDto.Id,
+                Title = markdownFileDto.Title,
+                FileContentAsHtml = markdown_html_content,
+                UploadDate = markdownFileDto.UploadDate
             };
 
-            return markdown_file_html_dto;
-        }
-
-        private string ConvertMarkdownToHtml(MarkdownFile markdownFile)
-        {
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-
-            string markdown_content = markdownFile.FileContent;
-
-            string markdown_html = Markdown.ToHtml(markdown_content, pipeline);
-
-            return markdown_html;
-        }
-
-        private string CheckGrammar(string content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static string StripMarkdown(string markdown)
-        {
-            throw new NotImplementedException();
+            return markdown_html_dto;
         }
     }
 }

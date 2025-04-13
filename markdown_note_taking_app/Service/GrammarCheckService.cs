@@ -13,9 +13,6 @@ namespace markdown_note_taking_app.Service
 {
     public class GrammarCheckService : IGrammarCheckService
     {
-        
-
-
         public async Task<string> CheckGrammarMarkdownAsync(string markdownContent)
         {
             //Check the grammar in the markdown content
