@@ -26,8 +26,8 @@ namespace markdown_note_taking_app.Service
 
         public async Task<MarkdownFileDto> CreateMarkdownFileAsync(MarkdownFileUploadDto markdownFile)
         {
-            if (markdownFile == null)
-                throw new BadHttpRequestException("File is empty");
+            //Validate the file content if empty and if it is a markdown file
+            ValidateMarkdownFile(markdownFile);
 
             string fileName = Path.GetFileName(markdownFile.MarkdownFile.FileName);
 
@@ -130,6 +130,20 @@ namespace markdown_note_taking_app.Service
             };
 
             return markdown_html_dto;
+        }
+
+        private void ValidateMarkdownFile(MarkdownFileUploadDto file)
+        {
+            string fileName = file.MarkdownFile.FileName;
+            string fileExtension = Path.GetExtension(fileName).ToLowerInvariant();
+
+            if (fileExtension != ".md")
+            {
+                throw new BadHttpRequestException("Invalid file type uploaded. Only markdown (.md) files are allowed.");
+            }
+
+            if (file == null || file.MarkdownFile.Length == 0)
+                throw new BadHttpRequestException("The file is empty");
         }
     }
 }
